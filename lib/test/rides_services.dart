@@ -1,7 +1,7 @@
+import 'package:blabla/model/ride/locations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:blabla/services/rides_service.dart';
 import 'package:blabla/dummy_data/dummy_data.dart';
-
 
 void main() {
   RidesService.availableRides = fakeRides;
@@ -12,6 +12,16 @@ void main() {
 
     expect(result.isNotEmpty, true);
     expect(result.every((ride) => ride.departureLocation == location), true);
+  });
+
+  test('filter rides by departure lication name', () {
+    final expectedLocation = Location(name: "Dijon", country: Country.france);
+    final result = RidesService.filterBy(
+      departure: Location(name: "Dijon", country: Country.france),
+    );
+
+    expect(result.isNotEmpty, true);
+    expect(result.every((ride) => ride.departureLocation == expectedLocation), true);
   });
 
   test('filter rides with enough available seat', () {
