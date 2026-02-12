@@ -1,4 +1,6 @@
+import 'package:blabla/services/ride_prefs_service.dart';
 import 'package:blabla/theme/theme.dart';
+import 'package:blabla/utils/animations_util.dart';
 import 'package:blabla/utils/date_time_util.dart';
 import 'package:blabla/widgets/actions/bla_button.dart';
 import 'package:blabla/widgets/display/bla_divider.dart';
@@ -95,6 +97,17 @@ class _RidePrefFormState extends State<RidePrefForm> {
     }
   }
 
+    void _onArrivalTap() async {
+    final Location? selected = await showDialog<Location>(
+      context: context,
+      builder: (context) => LocationPicker(selectedLocation: arrival),
+    );
+
+    if (selected != null) {
+      setState(() => arrival = selected);
+    }
+  }
+
   // ----------------------------------
   // Compute the widgets rendering
   // ----------------------------------
@@ -118,9 +131,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
     return BlaInputTile(
           icon: Icons.radio_button_unchecked,
           title: arrival?.name ?? 'Arrival',
-          onTap: () {
-            
-          },
+          onTap: _onArrivalTap
         );
   }
 
